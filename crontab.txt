@@ -1,0 +1,2 @@
+
+0 0 * * *  /home/pranav/Desktop/deltasysadtask1/cron_tes.sh
