@@ -5,26 +5,26 @@
  useradd -m MasterH
 
 #Adding three scientists
- useradd -m Heisenburg
+ useradd -m Heisenberg
  useradd -m Hertz
  useradd -m Holland
 
 #Making files of Scientists accessible to Master
- usermod -a -G Heisenburg MasterH
- chmod -R g+wx  /home/Heisenburg
+ usermod -a -G Heisenberg MasterH
+ chmod -R g+wx  /home/Heisenberg
  usermod -a -G Hertz MasterH
  chmod -R g+wx  /home/Hertz
  usermod -a -G Holland MasterH
  chmod -R g+wx  /home/Holland
 
-prefix=Heisenburg
+prefix=Heisenberg
 
 for i in {1..20}
 do
-  s="$prefix$i"
+  s="$prefix-Intern$i"
    useradd -m $s
    usermod -a -G $s MasterH
-   usermod -a -G $s Heisenburg
+   usermod -a -G $s Heisenberg
   p="/home/$s"
    chmod -R g+wx $p
 done
@@ -33,7 +33,7 @@ prefix=Hertz
 
 for i in {1..20}
 do
-   s="$prefix$i"
+   s="$prefix-Intern$i"
     useradd -m $s
     usermod -a -G $s MasterH
     usermod -a -G $s Hertz
@@ -46,7 +46,7 @@ done
 
 for i in {1..20}
 do
-  s="$prefix$i"
+  s="$prefix-Intern$i"
    useradd -m $s
    usermod -a -G $s MasterH
    usermod -a -G $s Holland
@@ -57,14 +57,14 @@ done
 #Adding directories
 for i in {1..5}
 do
- s=Heisenburg
+ s=Heisenberg
  t=task
  r="/home/$s/$t$i"
   mkdir $r
-  chown Heisenburg:Heisenburg $r
+  chown Heisenberg:Heisenberg $r
  for j in {1..20}
  do
-  p="$s$j" 
+  p="$s-Intern$j" 
   a="/home/$p/$t$i"
    mkdir $a
    chown $p:$p $a
@@ -80,7 +80,7 @@ do
   chown Hertz:Hertz $r
  for j in {1..20}
  do
-  p="$s$j" 
+  p="$s-Intern$j" 
   a="/home/$p/$t$i"
    mkdir $a
    chown $p:$p $a
@@ -96,7 +96,7 @@ do
   chown Holland:Holland $r
  for j in {1..20}
  do
-  p="$s$j" 
+  p="$s-Intern$j" 
   a="/home/$p/$t$i"
    mkdir $a
    chown $p:$p $a
@@ -109,11 +109,11 @@ do
   for j in {1..50}
   do
    random_string=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 128 | head -n 1) 
-   s=Heisenburg
+   s=Heisenberg
    t=task
    n="$t$i"
    p="$t$j"
-   r="/home/$s/$n/Heisenburg_$p.txt"
+   r="/home/$s/$n/Heisenberg_$p.txt"
     touch $r
     echo $random_string >> $r
 
@@ -153,7 +153,34 @@ do
 done 
 
 touch crontab.txt
-chmod +x cron_tex.sh
+chmod +x cron_tes.sh
 crontab crontab.txt
 
 
+
+
+#!/bin/bash
+
+touch /home/Heisenberg/success.txt 
+touch /home/Heisenberg/failure.txt
+touch /home/Hertz/success.txt 
+touch /home/Hertz/failure.txt
+touch /home/Holland/success.txt 
+touch /home/Holland/failure.txt
+
+
+for i in {1..20}
+do 
+  touch /home/Heisenberg-Intern$i/success.txt 
+  touch /home/Heisenberg-Intern$i/failure.txt
+done
+for i in {1..20}
+do  
+   touch /home/Holland-Intern$i/success.txt 
+   touch /home/Holland-Intern$i/failure.txt
+done
+for i in {1..20}
+do 
+     touch /home/Hertz-Intern$i/success.txt 
+     touch /home/Hertz-Intern$i/failure.txt
+done
